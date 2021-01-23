@@ -1,4 +1,11 @@
 ## Scrape instagram
+### Pre-setup
+
+Set in the file ".env" your instagram username and password. By replacing, the following environment variables.
+```
+INST_USERNAME=your_instagram_username
+INST_PASSWORD=your_instagram_password
+```
 
 ### Supported functions
 
