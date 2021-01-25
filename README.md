@@ -1,4 +1,4 @@
-## Scrape instagram
+## Instagram scraping CLI
 ### Pre-setup
 
 Set in the file ".env" your instagram username and password. By replacing, the following environment variables.
@@ -20,6 +20,7 @@ photo - default photo
 video - default photo
 stories-photo - stories with photo
 stories-video - stories with video
+stories-high - stories highlights
 ```
 ### Example
 

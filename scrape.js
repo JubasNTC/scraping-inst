@@ -15,6 +15,7 @@ const TYPES_LIST = new Set([
   'video',
   'stories-photo',
   'stories-video',
+  'stories-high',
 ]);
 
 const isValidParams = (type, url) => {
@@ -92,6 +93,55 @@ const [, , type, url] = process.argv;
           return Array.from(document.getElementsByTagName('source'))[0].src;
         });
         console.dir(videoStoriesURL._remoteObject.value);
+        break;
+
+      case 'stories-high':
+        await page.click('button._42FBe', { delay: 20 });
+        await page.waitForTimeout(1000);
+        const count = await page.evaluateHandle(() => {
+          return Array.from(document.getElementsByClassName('_7zQEa')).length;
+        });
+        const userURL = await page.evaluateHandle(() => {
+          return Array.from(
+            document.getElementsByClassName('FPmhX notranslate  _1PU_r')
+          )[0].href;
+        });
+
+        const $ = cheerio.load(await page.content());
+        const title = $("meta[property='og:title']").attr('content');
+        const [nameHigh] = title.split(' - ');
+
+        await page.goto(userURL._remoteObject.value, {
+          waitUntil: 'networkidle2',
+        });
+        await page.waitForTimeout(3000);
+
+        const tee = await page.evaluateHandle((nameHigh) => {
+          const el = Array.from(
+            document.getElementsByClassName('eXle2')
+          ).filter((el) => el.innerHTML === nameHigh)[0];
+          return el;
+        }, nameHigh);
+
+        await tee.click();
+        await tee.click();
+        await page.waitForTimeout(3000);
+
+        for (let i = 0; i < count._remoteObject.value; i++) {
+          const storiesURL = await page.evaluateHandle(() => {
+            const videoHigh = Array.from(
+              document.getElementsByTagName('source')
+            )[0];
+            const photoHigh = Array.from(
+              document.getElementsByTagName('img')
+            )[0];
+            return videoHigh ? videoHigh.src : photoHigh.src;
+          });
+          console.dir(`${i + 1}:`);
+          console.dir(storiesURL._remoteObject.value);
+          await page.click('button.FhutL', { delay: 20 });
+          await page.waitForTimeout(1000);
+        }
         break;
 
       default:
