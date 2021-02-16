@@ -5,6 +5,7 @@ require('dotenv').config();
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const axios = require('axios');
+const terminalLink = require('terminal-link');
 
 const ERROR_MESSAGE = {
   error: 'Probably the link is not working or the wrong type is selected.',
@@ -68,13 +69,16 @@ const [, , type, url] = process.argv;
     await page.goto(url, { waitUntil: 'networkidle2' });
     await page.waitForTimeout(3000);
 
+    let link = '';
+
     // execution of the specified type, except for the video type
     switch (type) {
       case 'photo':
         const imgURL = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByClassName('FFVAD'))[0].src;
         });
-        console.dir(imgURL._remoteObject.value);
+        link = terminalLink('', imgURL._remoteObject.value);
+        console.log(link);
         break;
 
       case 'stories-photo':
@@ -83,7 +87,8 @@ const [, , type, url] = process.argv;
         const photoStoriesURL = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByClassName('y-yJ5'))[0].src;
         });
-        console.dir(photoStoriesURL._remoteObject.value);
+        link = terminalLink('', photoStoriesURL._remoteObject.value);
+        console.log(link);
         break;
 
       case 'stories-video':
@@ -92,7 +97,8 @@ const [, , type, url] = process.argv;
         const videoStoriesURL = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByTagName('source'))[0].src;
         });
-        console.dir(videoStoriesURL._remoteObject.value);
+        link = terminalLink('', videoStoriesURL._remoteObject.value);
+        console.log(link);
         break;
 
       case 'stories-high':
@@ -137,8 +143,8 @@ const [, , type, url] = process.argv;
             )[0];
             return videoHigh ? videoHigh.src : photoHigh.src;
           });
-          console.dir(`${i + 1}:`);
-          console.dir(storiesURL._remoteObject.value);
+          link = terminalLink(`${i + 1}: `, storiesURL._remoteObject.value);
+          console.log(link);
           await page.click('button.FhutL', { delay: 20 });
           await page.waitForTimeout(1000);
         }
