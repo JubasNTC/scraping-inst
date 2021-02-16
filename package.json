@@ -13,8 +13,8 @@
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.5",
     "dotenv": "^8.2.0",
-    "puppeteer": "^5.5.0",
-    "terminal-link": "^2.1.1"
+    "open": "^7.4.1",
+    "puppeteer": "^5.5.0"
   },
   "devDependencies": {
     "husky": "^4.3.8",

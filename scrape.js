@@ -2,10 +2,12 @@
 
 require('dotenv').config();
 
+const fs = require('fs');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const axios = require('axios');
-const terminalLink = require('terminal-link');
+const open = require('open');
+const { createReport } = require('./utils');
 
 const ERROR_MESSAGE = {
   error: 'Probably the link is not working or the wrong type is selected.',
@@ -30,18 +32,25 @@ const getVideo = async (url) => {
   return videoString;
 };
 
+const createLinkTage = (url, text = 'URL') =>
+  `<p><a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a></p>`;
+
 // parse command line arguments
 const [, , type, url] = process.argv;
 
-(async () => {
-  if (!isValidParams(type, url)) {
-    return console.dir(ERROR_MESSAGE);
-  }
+if (!isValidParams(type, url)) {
+  console.dir(ERROR_MESSAGE);
+  process.exit(1);
+}
 
+(async () => {
   // if type === video case
   if (type === 'video') {
     const videoURL = await getVideo(url);
-    return console.dir(videoURL);
+    const linkTag = createLinkTage(videoURL);
+    await createReport(linkTag);
+    await open('result.html', { wait: true });
+    return;
   }
 
   // create browser instance
@@ -77,8 +86,7 @@ const [, , type, url] = process.argv;
         const imgURL = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByClassName('FFVAD'))[0].src;
         });
-        link = terminalLink('', imgURL._remoteObject.value);
-        console.log(link);
+        link = createLinkTage(imgURL._remoteObject.value);
         break;
 
       case 'stories-photo':
@@ -87,8 +95,7 @@ const [, , type, url] = process.argv;
         const photoStoriesURL = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByClassName('y-yJ5'))[0].src;
         });
-        link = terminalLink('', photoStoriesURL._remoteObject.value);
-        console.log(link);
+        link = createLinkTage(photoStoriesURL._remoteObject.value);
         break;
 
       case 'stories-video':
@@ -97,8 +104,7 @@ const [, , type, url] = process.argv;
         const videoStoriesURL = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByTagName('source'))[0].src;
         });
-        link = terminalLink('', videoStoriesURL._remoteObject.value);
-        console.log(link);
+        link = createLinkTage(videoStoriesURL._remoteObject.value);
         break;
 
       case 'stories-high':
@@ -143,7 +149,10 @@ const [, , type, url] = process.argv;
             )[0];
             return videoHigh ? videoHigh.src : photoHigh.src;
           });
-          link = terminalLink(`${i + 1}: `, storiesURL._remoteObject.value);
+          link += createLinkTage(
+            storiesURL._remoteObject.value,
+            `highlight ${i + 1}`
+          );
           console.log(link);
           await page.click('button.FhutL', { delay: 20 });
           await page.waitForTimeout(1000);
@@ -151,8 +160,13 @@ const [, , type, url] = process.argv;
         break;
 
       default:
+        console.dir(ERROR_MESSAGE);
+        process.exit(1);
         break;
     }
+
+    await createReport(link);
+    await open('result.html', { wait: true });
   } catch (e) {
     console.dir(ERROR_MESSAGE);
   } finally {
