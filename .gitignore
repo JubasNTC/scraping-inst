@@ -101,6 +101,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-# Tepm app
-result.html
