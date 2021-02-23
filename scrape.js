@@ -78,7 +78,7 @@ const [, , type, url] = process.argv;
         break;
 
       case 'stories-photo':
-        await page.click('button._42FBe', { delay: 20 });
+        await page.click('button.sqdOP', { delay: 20 });
         await page.waitForTimeout(2000);
         const photoStoriesURL = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByClassName('y-yJ5'))[0].src;
@@ -87,7 +87,7 @@ const [, , type, url] = process.argv;
         break;
 
       case 'stories-video':
-        await page.click('button._42FBe', { delay: 20 });
+        await page.click('button.sqdOP', { delay: 20 });
         await page.waitForTimeout(2000);
         const videoStoriesURL = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByTagName('source'))[0].src;
@@ -96,7 +96,7 @@ const [, , type, url] = process.argv;
         break;
 
       case 'stories-high':
-        await page.click('button._42FBe', { delay: 20 });
+        await page.click('button.sqdOP', { delay: 20 });
         await page.waitForTimeout(1000);
         const count = await page.evaluateHandle(() => {
           return Array.from(document.getElementsByClassName('_7zQEa')).length;
