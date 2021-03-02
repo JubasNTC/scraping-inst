@@ -16,11 +16,11 @@ node scrape.js selected_type you_url
 
 Supported types:
 ```
-photo - default photo
-video - default photo
-stories-photo - stories with photo
-stories-video - stories with video
-stories-high - stories highlights
+p - default photo
+v - default photo
+sp - stories with photo
+sv - stories with video
+sh - stories highlights
 ```
 ### Example
 
