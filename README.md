@@ -5,7 +5,6 @@ Set in the file ".env" your instagram username and password. By replacing, the f
 ```
 INST_USERNAME=your_instagram_username
 INST_PASSWORD=your_instagram_password
-
 ```
 Run the following command in terminal to install the project dependencies:
 ```
