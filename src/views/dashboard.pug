@@ -1,0 +1,13 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(rel='stylesheet', href='/css/bootstrap.min.css')
+  link(rel='stylesheet', href='/css/dashboard.css')
+  title Dashboard
+form.form-inline
+  label.mb-2.mr-sm-2(for='url') URL:
+  input#url.form-control.mb-2.mr-sm-2.input-url(type='text' name='url' size='58' maxlength='100' required='')
+  button.btn.btn-primary.mb-2(type='submit') Submit
+script(src='/js/dashboard.js')
