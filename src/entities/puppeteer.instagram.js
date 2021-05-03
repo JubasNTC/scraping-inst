@@ -80,6 +80,7 @@ class PuppeteerInstagram extends PuppeteerWrapper {
     await this._page.goto(url, {
       waitUntil: 'networkidle0',
     });
+    await this._page.waitForSelector('button.sqdOP', { visible: true });
     await this._page.click('button.sqdOP', { delay: 20 });
     await this._page.waitForSelector('img.y-yJ5');
 
@@ -110,7 +111,7 @@ class PuppeteerInstagram extends PuppeteerWrapper {
     await this._page.goto(url, {
       waitUntil: 'networkidle0',
     });
-    await this._page.waitForTimeout(1000);
+    await this._page.waitForSelector('button.sqdOP', { visible: true });
     await this._page.click('button.sqdOP', { delay: 20 });
     await this._page.waitForSelector('img.y-yJ5');
 
