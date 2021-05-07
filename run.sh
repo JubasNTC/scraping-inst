@@ -1,9 +1,3 @@
 #!/bin/bash
 
-if [ ! -d "./node_modules" ] 
-then
-  npm i
-fi
-
-npm run worker
-npm start
+xvfb-run --server-args="-screen 0 1024x768x24" npm run start
