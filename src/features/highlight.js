@@ -10,9 +10,9 @@ const InstagramScraper = require('../entities/instagram.scraper');
   const scraper = new InstagramScraper(cookies);
 
   try {
-    const userPost = await scraper.getUserPost(url);
+    const userHighlights = await scraper.getUserHighlight(url);
 
-    parentPort.postMessage({ error: null, data: userPost });
+    parentPort.postMessage({ error: null, data: userHighlights });
   } catch (error) {
     parentPort.postMessage({
       error,

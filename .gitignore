@@ -1,4 +1,7 @@
+.idea/
+.vscode/
 node_modules/
 downloads/
 var/
 npm-debug.log*
+.env*

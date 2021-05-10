@@ -3,7 +3,7 @@
 const path = require('path');
 const { Worker } = require('worker_threads');
 
-const { readCookie } = require('../utils/cookie');
+const { readCookies } = require('../utils/cookies');
 const { FEATURES_MAPPING, INSTAGRAM_URL_REGEXP } = require('../constants');
 
 class InstagramService {
@@ -23,11 +23,11 @@ class InstagramService {
       return Promise.reject(new Error('Unsupported url type.'));
     }
 
-    const cookie = await readCookie();
+    const cookies = await readCookies();
 
     const workerOptions = {
       feature: FEATURES_MAPPING.get(urlType),
-      workerData: { cookie, url },
+      workerData: { cookies, url },
     };
 
     return await this.runWorker(workerOptions);

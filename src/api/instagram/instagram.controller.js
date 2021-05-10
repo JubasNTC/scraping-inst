@@ -15,7 +15,9 @@ module.exports = {
 
       res.send(scrapedData);
     } catch (error) {
-      res.send(error);
+      console.error(error);
+
+      res.sendStatus(400);
     }
   },
 

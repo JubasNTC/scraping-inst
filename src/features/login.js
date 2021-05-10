@@ -2,29 +2,20 @@
 
 const { parentPort } = require('worker_threads');
 
-const PuppeteerInstagram = require('../entities/puppeteer.instagram');
+const InstagramScraper = require('../entities/instagram.scraper');
 
 (async () => {
-  const scraper = new PuppeteerInstagram();
-
-  try {
-    await scraper.launchBrowser({ headless: false });
-  } catch {
-    parentPort.postMessage({
-      error: new Error('Failed to start the browser.'),
-      data: null,
-    });
-  }
+  const scraper = new InstagramScraper();
 
   try {
     await scraper.login();
 
-    const cookie = await scraper.getCookie();
+    const cookies = await scraper.getCookies();
 
-    parentPort.postMessage({ error: null, data: cookie });
-  } catch (e) {
+    parentPort.postMessage({ error: null, data: cookies });
+  } catch (error) {
     parentPort.postMessage({
-      error: new Error('Failed authorization.'),
+      error,
       data: null,
     });
   } finally {

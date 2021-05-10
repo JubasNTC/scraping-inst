@@ -6,15 +6,8 @@ const instagramRouter = require('../api/instagram/instagram.router');
 
 const router = express.Router();
 
-const ROUTES_MAP = [
-  {
-    path: '/instagram',
-    parent: instagramRouter,
-  },
-];
+router.use('/instagram', instagramRouter);
 
-ROUTES_MAP.forEach(({ path, parent }) => {
-  router.use(path, parent);
-});
+router.get('/favicon.ico', (req, res) => res.sendStatus(200));
 
 module.exports = router;

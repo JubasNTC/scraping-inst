@@ -5,5 +5,4 @@ then
   npm i
 fi
 
-npm run worker
 npm start

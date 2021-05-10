@@ -3,10 +3,10 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const COOKIE_PATH = '../../var/cookie.json';
+const COOKIE_PATH = '../../var/cookies.json';
 
 module.exports = {
-  saveCookie: async (cookie) => {
+  saveCookies: async (cookie) => {
     await fs.writeFile(
       path.join(__dirname, COOKIE_PATH),
       JSON.stringify(cookie),
@@ -14,7 +14,7 @@ module.exports = {
     );
   },
 
-  readCookie: async () => {
+  readCookies: async () => {
     const cookie = await fs.readFile(
       path.join(__dirname, COOKIE_PATH),
       'utf-8'
