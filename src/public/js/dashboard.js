@@ -15,7 +15,7 @@ const generateHtmlReport = (links) => {
   const listItems = links.reduce(
     (acc, curr) => `
       ${acc}
-      <li class="list-group-item">
+      <li class="list-group-item scraped-url">
         <a href="${curr}" target="_blank" rel="noopener noreferrer">${curr}</a>
       </li>
     `,
@@ -27,7 +27,7 @@ const generateHtmlReport = (links) => {
     <label for="links-list">
       Number of links: ${links.length}. 
     </label>
-    <ul id="links-list" class="list-group">${listItems}</ul>
+    <ol id="links-list" class="list-group">${listItems}</ol>
   `;
 };
 
@@ -41,6 +41,8 @@ const createDomElement = ({ tag, id, innerHTML }) => {
 
 document.addEventListener('submit', async (event) => {
   event.preventDefault();
+
+  document.getElementById('button-submit').disabled = true;
 
   const previousReport = document.body.querySelector('div#report');
   const previousErrorMessage = document.body.querySelector('div#erorr-message');
@@ -58,6 +60,7 @@ document.addEventListener('submit', async (event) => {
     id: 'preloader',
     innerHTML: 'Loading...',
   });
+
   document.body.appendChild(preloader);
 
   try {
@@ -95,5 +98,6 @@ document.addEventListener('submit', async (event) => {
     document.body.appendChild(errorMessage);
   } finally {
     document.body.removeChild(preloader);
+    document.getElementById('button-submit').disabled = false;
   }
 });

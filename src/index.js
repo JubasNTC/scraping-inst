@@ -28,7 +28,7 @@ const { saveCookies } = require('./utils/cookies');
 
   const server = http.createServer(app);
 
-  const port = process.env.PORT || 1337;
+  const port = process.env.PORT || 8080;
 
   server.listen(port, () => {
     console.log(`Dashboard URL: http://localhost:${port}/api/instagram`);

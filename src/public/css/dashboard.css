@@ -1,3 +1,12 @@
 body {
   padding: 20px;
 }
+
+.scraped-url {
+  word-wrap: break-word;
+}
+
+.list-group-item {
+  display: list-item;
+  margin-left: 30px;
+}
