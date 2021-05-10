@@ -4,22 +4,23 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "NODE_ENV=production node src/index.js"
+    "start": "NODE_ENV=production node src/index.js",
+    "dev": "NODE_ENV=development nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
-    "cheerio": "^1.0.0-rc.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^4.5.0",
     "http-errors": "^1.8.0",
-    "pug": "^3.0.2",
-    "puppeteer": "^9.1.1"
+    "nightmare": "^3.0.2",
+    "pug": "^3.0.2"
   },
   "devDependencies": {
+    "dotenv": "^9.0.1",
+    "nodemon": "^2.0.7",
     "prettier": "^2.2.1"
   }
 }

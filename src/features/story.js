@@ -2,30 +2,20 @@
 
 const { workerData, parentPort } = require('worker_threads');
 
-const PuppeteerInstagram = require('../entities/puppeteer.instagram');
+const InstagramScraper = require('../entities/instagram.scraper');
 
 (async () => {
-  const { cookie, url } = workerData;
+  const { cookies, url } = workerData;
 
-  const scraper = new PuppeteerInstagram();
-
-  try {
-    await scraper.launchBrowser();
-    await scraper.setCookie(cookie);
-  } catch {
-    parentPort.postMessage({
-      error: new Error('Failed to start the browser.'),
-      data: null,
-    });
-  }
+  const scraper = new InstagramScraper(cookies);
 
   try {
     const userStory = await scraper.getUserStory(url);
 
     parentPort.postMessage({ error: null, data: userStory });
-  } catch {
+  } catch (error) {
     parentPort.postMessage({
-      error: new Error('Failed scrape user story.'),
+      error,
       data: null,
     });
   } finally {
